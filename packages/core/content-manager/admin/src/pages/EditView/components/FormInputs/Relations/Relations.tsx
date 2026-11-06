@@ -750,9 +750,14 @@ const RelationModalWithContext = ({
 
   const options = data?.results ?? [];
 
+  /**
+   * Whenever the selection changes, clear the search text and the search params so that
+   * reopening the dropdown lists the remaining relations instead of the results of the last search.
+   */
   React.useLayoutEffect(() => {
     setTextValue('');
-  }, [fieldValue]);
+    setSearchParams((s) => ({ ...s, _q: '', page: 1 }));
+  }, [fieldValue, setSearchParams]);
 
   const handleSearch = async (search: string) => {
     setSearchParams((s) => ({ ...s, _q: search, page: 1 }));
